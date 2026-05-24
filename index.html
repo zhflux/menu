@@ -10,11 +10,9 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html,body{background:#f5f0eb;font-family:'DM Sans',sans-serif;color:#2a2218;-webkit-font-smoothing:antialiased}
-
-/* hide all radio inputs */
 input[type=radio]{position:absolute;opacity:0;width:0;height:0}
 
-.header{background:#4a6b3e;color:#fff;padding:env(safe-area-inset-top,28px) 20px 24px;padding-top:max(env(safe-area-inset-top),28px)}
+.header{background:#4a6b3e;color:#fff;padding:max(env(safe-area-inset-top),28px) 20px 24px}
 .header-tag{font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;opacity:.7;margin-bottom:6px}
 .header h1{font-family:'DM Serif Display',serif;font-size:30px;line-height:1.15;margin-bottom:16px}
 .header h1 em{font-style:italic;opacity:.85}
@@ -29,42 +27,73 @@ input[type=radio]{position:absolute;opacity:0;width:0;height:0}
 .pref-card.avoid{background:#faf0ed;color:#7a3a2c}
 .pref-title{font-weight:500;margin-bottom:3px;font-size:11px;text-transform:uppercase;letter-spacing:.07em;opacity:.75}
 
-/* TAB SYSTEM - CSS only via radio */
+/* SECTION TOGGLE (Меню / Список) */
+.section-tabs{display:flex;gap:0;padding:0 16px 14px}
+.section-tabs input[type=radio]{position:absolute;opacity:0;width:0;height:0}
+.sec-label{flex:1;text-align:center;padding:10px;font-size:13px;font-weight:500;color:#6b5f52;background:#fffdf9;border:1px solid rgba(42,34,24,.12);cursor:pointer;transition:all .15s}
+.sec-label:first-of-type{border-radius:12px 0 0 12px}
+.sec-label:last-of-type{border-radius:0 12px 12px 0}
+#sec-menu:checked ~ .section-tabs label[for=sec-menu],
+#sec-shop:checked ~ .section-tabs label[for=sec-shop]{background:#4a6b3e;color:#fff;border-color:#4a6b3e}
+
+/* Show/hide sections */
+.menu-section{display:none}
+.shop-section{display:none}
+#sec-menu:checked ~ .menu-section{display:block}
+#sec-shop:checked ~ .shop-section{display:block}
+
+/* DAY TABS */
 .tabs-wrap{display:flex;gap:7px;padding:0 16px 12px;overflow-x:auto;scrollbar-width:none}
 .tabs-wrap::-webkit-scrollbar{display:none}
 .tab-label{flex-shrink:0;border:1.5px solid rgba(42,34,24,.12);border-radius:50px;padding:7px 18px;font-size:13px;font-weight:500;background:#fffdf9;color:#6b5f52;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;white-space:nowrap}
-.tab-label:active{transform:scale(.96)}
 
-/* active tab styles */
-#d0:checked ~ .tabs-wrap label[for=d0],
-#d1:checked ~ .tabs-wrap label[for=d1],
-#d2:checked ~ .tabs-wrap label[for=d2],
-#d3:checked ~ .tabs-wrap label[for=d3],
-#d4:checked ~ .tabs-wrap label[for=d4],
-#d5:checked ~ .tabs-wrap label[for=d5],
-#d6:checked ~ .tabs-wrap label[for=d6]{background:#4a6b3e;color:#fff;border-color:#4a6b3e}
+/* Menu day tabs */
+#d0:checked ~ .menu-section .menu-tabs label[for=d0],
+#d1:checked ~ .menu-section .menu-tabs label[for=d1],
+#d2:checked ~ .menu-section .menu-tabs label[for=d2],
+#d3:checked ~ .menu-section .menu-tabs label[for=d3],
+#d4:checked ~ .menu-section .menu-tabs label[for=d4],
+#d5:checked ~ .menu-section .menu-tabs label[for=d5],
+#d6:checked ~ .menu-section .menu-tabs label[for=d6]{background:#4a6b3e;color:#fff;border-color:#4a6b3e}
 
-/* show/hide day panels */
+/* Shop day tabs */
+#d0:checked ~ .shop-section .shop-tabs label[for=d0],
+#d1:checked ~ .shop-section .shop-tabs label[for=d1],
+#d2:checked ~ .shop-section .shop-tabs label[for=d2],
+#d3:checked ~ .shop-section .shop-tabs label[for=d3],
+#d4:checked ~ .shop-section .shop-tabs label[for=d4],
+#d5:checked ~ .shop-section .shop-tabs label[for=d5],
+#d6:checked ~ .shop-section .shop-tabs label[for=d6]{background:#4a6b3e;color:#fff;border-color:#4a6b3e}
+
+/* Menu day panels */
 .day-panel{display:none;padding:0 16px 100px;animation:fadeIn .2s ease}
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-#d0:checked ~ .day-panel[data-day="0"],
-#d1:checked ~ .day-panel[data-day="1"],
-#d2:checked ~ .day-panel[data-day="2"],
-#d3:checked ~ .day-panel[data-day="3"],
-#d4:checked ~ .day-panel[data-day="4"],
-#d5:checked ~ .day-panel[data-day="5"],
-#d6:checked ~ .day-panel[data-day="6"]{display:block}
+#d0:checked ~ .menu-section .day-panel[data-day="0"],
+#d1:checked ~ .menu-section .day-panel[data-day="1"],
+#d2:checked ~ .menu-section .day-panel[data-day="2"],
+#d3:checked ~ .menu-section .day-panel[data-day="3"],
+#d4:checked ~ .menu-section .day-panel[data-day="4"],
+#d5:checked ~ .menu-section .day-panel[data-day="5"],
+#d6:checked ~ .menu-section .day-panel[data-day="6"]{display:block}
+
+/* Shop day panels */
+.shop-panel{display:none;padding:0 16px 100px;animation:fadeIn .2s ease}
+#d0:checked ~ .shop-section .shop-panel[data-day="0"],
+#d1:checked ~ .shop-section .shop-panel[data-day="1"],
+#d2:checked ~ .shop-section .shop-panel[data-day="2"],
+#d3:checked ~ .shop-section .shop-panel[data-day="3"],
+#d4:checked ~ .shop-section .shop-panel[data-day="4"],
+#d5:checked ~ .shop-section .shop-panel[data-day="5"],
+#d6:checked ~ .shop-section .shop-panel[data-day="6"]{display:block}
 
 .total-bar{background:#4a6b3e;color:#fff;border-radius:16px;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
 .total-bar-lbl{font-size:13px;opacity:.8}
 .total-bar-sub{font-size:11px;opacity:.6;margin-top:1px}
 .total-bar-val{font-size:22px;font-weight:500}
-
 .macro-row{display:flex;gap:8px;margin-bottom:14px}
 .macro-box{flex:1;background:#fffdf9;border:1px solid rgba(42,34,24,.1);border-radius:10px;padding:10px;text-align:center}
 .macro-val{font-size:16px;font-weight:500}
 .macro-lbl{font-size:10px;color:#a8998a;margin-top:2px}
-
 .meal-card{background:#fffdf9;border-radius:16px;margin-bottom:12px;overflow:hidden;border:1px solid rgba(42,34,24,.09)}
 .meal-top{display:flex;align-items:center;padding:13px 15px 0;gap:10px}
 .meal-icon{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
@@ -77,11 +106,31 @@ input[type=radio]{position:absolute;opacity:0;width:0;height:0}
 .meal-macros{display:flex;gap:6px;padding:0 15px 13px 65px;flex-wrap:wrap}
 .pill{font-size:11px;padding:3px 9px;border-radius:50px;font-weight:500}
 .pp{background:#faf0ed;color:#c97b6a}.pc{background:#eef0fb;color:#5a68b5}.pf{background:#fdf4e7;color:#c9944a}
+
+/* SHOPPING LIST */
+.shop-header-bar{background:#4a6b3e;color:#fff;border-radius:16px;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.shop-header-lbl{font-size:13px;opacity:.8}
+.shop-header-val{font-size:14px;font-weight:500}
+.shop-cat{margin-bottom:14px}
+.shop-cat-title{font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:#a8998a;padding:0 4px;margin-bottom:8px}
+.shop-items{background:#fffdf9;border-radius:16px;border:1px solid rgba(42,34,24,.09);overflow:hidden}
+.shop-item{display:flex;align-items:center;gap:12px;padding:13px 16px;border-bottom:1px solid rgba(42,34,24,.07);cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .15s}
+.shop-item:last-child{border-bottom:none}
+.shop-item:active{background:#f0ece6}
+.shop-check{width:24px;height:24px;border-radius:50%;border:2px solid rgba(42,34,24,.2);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s;font-size:13px}
+.shop-item-text{flex:1}
+.shop-item-name{font-size:14px;font-weight:500;transition:all .2s}
+.shop-item-amount{font-size:12px;color:#a8998a;margin-top:1px}
+/* checked state via hidden checkbox */
+.shop-item input[type=checkbox]{position:absolute;opacity:0;width:0;height:0}
+.shop-item input[type=checkbox]:checked + .shop-check{background:#4a6b3e;border-color:#4a6b3e;color:#fff}
+.shop-item input[type=checkbox]:checked ~ .shop-item-text .shop-item-name{text-decoration:line-through;color:#a8998a}
+.clear-btn{display:block;width:100%;margin-top:10px;padding:12px;background:#fffdf9;border:1px solid rgba(42,34,24,.12);border-radius:12px;font-size:13px;font-family:'DM Sans',sans-serif;color:#6b5f52;cursor:pointer;text-align:center;-webkit-tap-highlight-color:transparent}
+.clear-btn:active{background:#f0ece6}
 </style>
 </head>
 <body>
 
-<!-- Radio inputs must be siblings of everything -->
 <input type="radio" name="day" id="d0" checked>
 <input type="radio" name="day" id="d1">
 <input type="radio" name="day" id="d2">
@@ -89,6 +138,8 @@ input[type=radio]{position:absolute;opacity:0;width:0;height:0}
 <input type="radio" name="day" id="d4">
 <input type="radio" name="day" id="d5">
 <input type="radio" name="day" id="d6">
+<input type="radio" name="mainsec" id="sec-menu" checked>
+<input type="radio" name="mainsec" id="sec-shop">
 
 <div class="header">
   <div class="header-tag">план питания · 1550 ккал</div>
@@ -106,260 +157,329 @@ input[type=radio]{position:absolute;opacity:0;width:0;height:0}
   <div class="pref-card avoid"><div class="pref-title">✗ Без этого</div>Яблоки · Бананы · Болгарский перец · Помидоры</div>
 </div>
 
-<div class="tabs-wrap">
-  <label class="tab-label" for="d0">Пн</label>
-  <label class="tab-label" for="d1">Вт</label>
-  <label class="tab-label" for="d2">Ср</label>
-  <label class="tab-label" for="d3">Чт</label>
-  <label class="tab-label" for="d4">Пт</label>
-  <label class="tab-label" for="d5">Сб</label>
-  <label class="tab-label" for="d6">Вс</label>
+<!-- SECTION SWITCHER -->
+<div class="section-tabs">
+  <label class="sec-label" for="sec-menu">🍽 Меню</label>
+  <label class="sec-label" for="sec-shop">🛒 Список покупок</label>
 </div>
 
-<!-- ПОНЕДЕЛЬНИК -->
-<div class="day-panel" data-day="0">
-  <div class="total-bar"><div><div class="total-bar-lbl">Итого за день</div><div class="total-bar-sub">−20 ккал от нормы</div></div><div class="total-bar-val">1530 ккал</div></div>
-  <div class="macro-row">
-    <div class="macro-box"><div class="macro-val" style="color:#c97b6a">111г</div><div class="macro-lbl">Белки</div></div>
-    <div class="macro-box"><div class="macro-val" style="color:#5a68b5">91г</div><div class="macro-lbl">Углеводы</div></div>
-    <div class="macro-box"><div class="macro-val" style="color:#c9944a">40г</div><div class="macro-lbl">Жиры</div></div>
+<!-- ===================== MENU SECTION ===================== -->
+<div class="menu-section">
+  <div class="tabs-wrap menu-tabs">
+    <label class="tab-label" for="d0">Пн</label>
+    <label class="tab-label" for="d1">Вт</label>
+    <label class="tab-label" for="d2">Ср</label>
+    <label class="tab-label" for="d3">Чт</label>
+    <label class="tab-label" for="d4">Пт</label>
+    <label class="tab-label" for="d5">Сб</label>
+    <label class="tab-label" for="d6">Вс</label>
   </div>
-  <div class="meal-card">
-    <div class="meal-top"><div class="meal-icon ic-b">🌅</div><div class="meal-meta"><div class="meal-time">Завтрак · 8:00</div><div class="meal-title">Омлет с брокколи и сыром</div></div><div class="meal-kcal">370</div></div>
-    <div class="meal-desc">2 яйца + 50г брокколи + 20г сыра. Готовить под крышкой на слабом огне — получается нежный и сочный</div>
-    <div class="meal-macros"><span class="pill pp">Б 22г</span><span class="pill pc">У 6г</span><span class="pill pf">Ж 18г</span></div>
-  </div>
-  <div class="meal-card">
-    <div class="meal-top"><div class="meal-icon ic-s">🍇</div><div class="meal-meta"><div class="meal-time">Перекус · 11:00</div><div class="meal-title">Виноград + йогурт</div></div><div class="meal-kcal">195</div></div>
-    <div class="meal-desc">150г греческого йогурта 2% + горсть винограда ~120г</div>
-    <div class="meal-macros"><span class="pill pp">Б 12г</span><span class="pill pc">У 20г</span><span class="pill pf">Ж 3г</span></div>
-  </div>
-  <div class="meal-card">
-    <div class="meal-top"><div class="meal-icon ic-l">🍲</div><div class="meal-meta"><div class="meal-time">Обед · 13:30</div><div class="meal-title">Куриный суп со шпинатом</div></div><div class="meal-kcal">420</div></div>
-    <div class="meal-desc">Куриное бедро 150г без кожи, картофель 2 шт, морковь, шпинат, лук — лёгкий нежирный бульон</div>
-    <div class="meal-macros"><span class="pill pp">Б 32г</span><span class="pill pc">У 28г</span><span class="pill pf">Ж 8г</span></div>
-  </div>
-  <div class="meal-card">
-    <div class="meal-top"><div class="meal-icon ic-p">💚</div><div class="meal-meta"><div class="meal-time">После тренировки · 17:00</div><div class="meal-title">Кефир + груша</div></div><div class="meal-kcal">165</div></div>
-    <div class="meal-desc">200мл кефира 1% + свежая груша ~150г</div>
-    <div class="meal-macros"><span class="pill pp">Б 7г</span><span class="pill pc">У 25г</span><span class="pill pf">Ж 2г</span></div>
-  </div>
-  <div class="meal-card">
-    <div class="meal-top"><div class="meal-icon ic-d">🌙</div><div class="meal-meta"><div class="meal-time">Ужин · 19:30</div><div class="meal-title">Курица в кефирном соусе с кабачком</div></div><div class="meal-kcal">380</div></div>
-    <div class="meal-desc">150г филе запечённое с кефирно-чесночным соусом + тушёный кабачок 200г</div>
-    <div class="meal-macros"><span class="pill pp">Б 38г</span><span class="pill pc">У 12г</span><span class="pill pf">Ж 9г</span></div>
-  </div>
-</div>
 
-<!-- ВТОРНИК -->
-<div class="day-panel" data-day="1">
-  <div class="total-bar"><div><div class="total-bar-lbl">Итого за день</div><div class="total-bar-sub">−10 ккал от нормы</div></div><div class="total-bar-val">1540 ккал</div></div>
-  <div class="macro-row">
-    <div class="macro-box"><div class="macro-val" style="color:#c97b6a">99г</div><div class="macro-lbl">Белки</div></div>
-    <div class="macro-box"><div class="macro-val" style="color:#5a68b5">150г</div><div class="macro-lbl">Углеводы</div></div>
-    <div class="macro-box"><div class="macro-val" style="color:#c9944a">32г</div><div class="macro-lbl">Жиры</div></div>
+  <!-- ПН -->
+  <div class="day-panel" data-day="0">
+    <div class="total-bar"><div><div class="total-bar-lbl">Итого за день</div><div class="total-bar-sub">−20 ккал от нормы</div></div><div class="total-bar-val">1530 ккал</div></div>
+    <div class="macro-row">
+      <div class="macro-box"><div class="macro-val" style="color:#c97b6a">111г</div><div class="macro-lbl">Белки</div></div>
+      <div class="macro-box"><div class="macro-val" style="color:#5a68b5">91г</div><div class="macro-lbl">Углеводы</div></div>
+      <div class="macro-box"><div class="macro-val" style="color:#c9944a">40г</div><div class="macro-lbl">Жиры</div></div>
+    </div>
+    <div class="meal-card"><div class="meal-top"><div class="meal-icon ic-b">🌅</div><div class="meal-meta"><div class="meal-time">Завтрак · 8:00</div><div class="meal-title">Омлет с брокколи и сыром</div></div><div class="meal-kcal">370</div></div><div class="meal-desc">2 яйца + 50г брокколи + 20г сыра. Готовить под крышкой на слабом огне</div><div class="meal-macros"><span class="pill pp">Б 22г</span><span class="pill pc">У 6г</span><span class="pill pf">Ж 18г</span></div></div>
+    <div class="meal-card"><div class="meal-top"><div class="meal-icon ic-s">🍇</div><div class="meal-meta"><div class="meal-time">Перекус · 11:00</div><div class="meal-title">Виноград + йогурт</div></div><div class="meal-kcal">195</div></div><div class="meal-desc">150г греческого йогурта 2% + горсть винограда ~120г</div><div class="meal-macros"><span class="pill pp">Б 12г</span><span class="pill pc">У 20г</span><span class="pill pf">Ж 3г</span></div></div>
+    <div class="meal-card"><div class="meal-top"><div class="meal-icon ic-l">🍲</div><div class="meal-meta"><div class="meal-time">Обед · 13:30</div><div class="meal-title">Куриный суп со шпинатом</div></div><div class="meal-kcal">420</div></div><div class="meal-desc">Куриное бедро 150г, картофель 2 шт, морковь, шпинат, лук — лёгкий бульон</div><div class="meal-macros"><span class="pill pp">Б 32г</span><span class="pill pc">У 28г</span><span class="pill pf">Ж 8г</span></div></div>
+    <div class="meal-card"><div class="meal-top"><div class="meal-icon ic-p">💚</div><div class="meal-meta"><div class="meal-time">После тренировки · 17:00</div><div class="meal-title">Кефир + груша</div></div><div class="meal-kcal">165</div></div><div class="meal-desc">200мл кефира 1% + свежая груша ~150г</div><div class="meal-macros"><span class="pill pp">Б 7г</span><span class="pill pc">У 25г</span><span class="pill pf">Ж 2г</span></div></div>
+    <div class="meal-card"><div class="meal-top"><div class="meal-icon ic-d">🌙</div><div class="meal-meta"><div class="meal-time">Ужин · 19:30</div><div class="meal-title">Курица в кефирном соусе с кабачком</div></div><div class="meal-kcal">380</div></div><div class="meal-desc">150г филе запечённое с кефирно-чесночным соусом + тушёный кабачок 200г</div><div class="meal-macros"><span class="pill pp">Б 38г</span><span class="pill pc">У 12г</span><span class="pill pf">Ж 9г</span></div></div>
   </div>
-  <div class="meal-card">
-    <div class="meal-top"><div class="meal-icon ic-b">🥭</div><div class="meal-meta"><div class="meal-time">Завтрак · 8:00</div><div class="meal-title">Овсянка с манго</div></div><div class="meal-kcal">360</div></div>
-    <div class="meal-desc">70г овсянки на воде + 100г манго + 1 ч.л. мёда</div>
-    <div class="meal-macros"><span class="pill pp">Б 10г</span><span class="pill pc">У 62г</span><span class="pill pf">Ж 5г</span></div>
-  </div>
-  <div class="meal-card">
-    <div class="meal-top"><div class="meal-icon ic-s">🍑</div><div class="meal-meta"><div class="meal-time">Перекус · 11:00</div><div class="meal-title">Творог с персиком</div></div><div class="meal-kcal">200</div></div>
-    <div class="meal-desc">150г творога 5% + свежий персик ~120г</div>
-    <div class="meal-macros"><span class="pill pp">Б 16г</span><span class="pill pc">У 18г</span><span class="pill pf">Ж 5г</span></div>
-  </div>
-  <div class="meal-card">
-    <div class="meal-top"><div class="meal-icon ic-l">🥣</div><div class="meal-meta"><div class="meal-time">Обед · 13:30</div><div class="meal-title">Гречневый боул с курицей</div></div><div class="meal-kcal">450</div></div>
-    <div class="meal-desc">100г гречки + 150г куриного бедра варёного (сочное!) + огурцы + зелень + оливковое масло 1 ч.л.</div>
-    <div class="meal-macros"><span class="pill pp">Б 34г</span><span class="pill pc">У 44г</span><span class="pill pf">Ж 10г</span></div>
-  </div>
-  <div class="meal-card">
-    <div class="meal-top"><div class="meal-icon ic-s">🍑</div><div class="meal-meta"><div class="meal-time">Перекус · 16:30</div><div class="meal-title">Нектарин + миндаль</div></div><div class="meal-kcal">160</div></div>
-    <div class="meal-desc">1 нектарин ~140г + 15г миндаля</div>
-    <div class="meal-macros"><span class="pill pp">Б 4г</span><span class="pill pc">У 22г</span><span class="pill pf">Ж 8г</span></div>
-  </div>
-  <div class="meal-card">
-    <div class="meal-top"><div class="meal-icon ic-d">🌙</div><div class="meal-meta"><div class="meal-time">Ужин · 19:30</div><div class="meal-title">Тушёная курица с баклажаном</div></div><div class="meal-kcal">370</div></div>
-    <div class="meal-desc">150г куриного бедра + 200г баклажана + лук + чеснок + куркума, тушить с водой 25 мин</div>
-    <div class="meal-macros"><span class="pill pp">Б 35г</span><span class="pill pc">У 14г</span><span class="pill pf">Ж 9г</span></div>
-  </div>
-</div>
 
-<!-- СРЕДА -->
-<div class="day-panel" data-day="2">
-  <div class="total-bar"><div><div class="total-bar-lbl">Итого за день</div><div class="total-bar-sub">−20 ккал от нормы</div></div><div class="total-bar-val">1530 ккал</div></div>
-  <div class="macro-row">
-    <div class="macro-box"><div class="macro-val" style="color:#c97b6a">104г</div><div class="macro-lbl">Белки</div></div>
-    <div class="macro-box"><div class="macro-val" style="color:#5a68b5">128г</div><div class="macro-lbl">Углеводы</div></div>
-    <div class="macro-box"><div class="macro-val" style="color:#c9944a">46г</div><div class="macro-lbl">Жиры</div></div>
+  <!-- ВТ -->
+  <div class="day-panel" data-day="1">
+    <div class="total-bar"><div><div class="total-bar-lbl">Итого за день</div><div class="total-bar-sub">−10 ккал от нормы</div></div><div class="total-bar-val">1540 ккал</div></div>
+    <div class="macro-row">
+      <div class="macro-box"><div class="macro-val" style="color:#c97b6a">99г</div><div class="macro-lbl">Белки</div></div>
+      <div class="macro-box"><div class="macro-val" style="color:#5a68b5">150г</div><div class="macro-lbl">Углеводы</div></div>
+      <div class="macro-box"><div class="macro-val" style="color:#c9944a">32г</div><div class="macro-lbl">Жиры</div></div>
+    </div>
+    <div class="meal-card"><div class="meal-top"><div class="meal-icon ic-b">🥭</div><div class="meal-meta"><div class="meal-time">Завтрак · 8:00</div><div class="meal-title">Овсянка с манго</div></div><div class="meal-kcal">360</div></div><div class="meal-desc">70г овсянки на воде + 100г манго + 1 ч.л. мёда</div><div class="meal-macros"><span class="pill pp">Б 10г</span><span class="pill pc">У 62г</span><span class="pill pf">Ж 5г</span></div></div>
+    <div class="meal-card"><div class="meal-top"><div class="meal-icon ic-s">🍑</div><div class="meal-meta"><div class="meal-time">Перекус · 11:00</div><div class="meal-title">Творог с персиком</div></div><div class="meal-kcal">200</div></div><div class="meal-desc">150г творога 5% + свежий персик ~120г</div><div class="meal-macros"><span class="pill pp">Б 16г</span><span class="pill pc">У 18г</span><span class="pill pf">Ж 5г</span></div></div>
+    <div class="meal-card"><div class="meal-top"><div class="meal-icon ic-l">🥣</div><div class="meal-meta"><div class="meal-time">Обед · 13:30</div><div class="meal-title">Гречневый боул с курицей</div></div><div class="meal-kcal">450</div></div><div class="meal-desc">100г гречки + 150г куриного бедра + огурцы + зелень + оливковое масло</div><div class="meal-macros"><span class="pill pp">Б 34г</span><span class="pill pc">У 44г</span><span class="pill pf">Ж 10г</span></div></div>
+    <div class="meal-card"><div class="meal-top"><div class="meal-icon ic-s">🍑</div><div class="meal-meta"><div class="meal-time">Перекус · 16:30</div><div class="meal-title">Нектарин + миндаль</div></div><div class="meal-kcal">160</div></div><div class="meal-desc">1 нектарин ~140г + 15г миндаля</div><div class="meal-macros"><span class="pill pp">Б 4г</span><span class="pill pc">У 22г</span><span class="pill pf">Ж 8г</span></div></div>
+    <div class="meal-card"><div class="meal-top"><div class="meal-icon ic-d">🌙</div><div class="meal-meta"><div class="meal-time">Ужин · 19:30</div><div class="meal-title">Тушёная курица с баклажаном</div></div><div class="meal-kcal">370</div></div><div class="meal-desc">150г куриного бедра + 200г баклажана + лук + чеснок + куркума</div><div class="meal-macros"><span class="pill pp">Б 35г</span><span class="pill pc">У 14г</span><span class="pill pf">Ж 9г</span></div></div>
   </div>
-  <div class="meal-card">
-    <div class="meal-top"><div class="meal-icon ic-b">🥞</div><div class="meal-meta"><div class="meal-time">Завтрак · 8:00</div><div class="meal-title">Сырники с киви</div></div><div class="meal-kcal">390</div></div>
-    <div class="meal-desc">3 сырника из 200г творога в духовке 180° + 1 ст.л. сметаны 15% + киви 1 шт</div>
-    <div class="meal-macros"><span class="pill pp">Б 24г</span><span class="pill pc">У 34г</span><span class="pill pf">Ж 12г</span></div>
-  </div>
-  <div class="meal-card">
-    <div class="meal-top"><div class="meal-icon ic-s">🍉</div><div class="meal-meta"><div class="meal-time">Перекус · 11:00</div><div class="meal-title">Арбуз или дыня</div></div><div class="meal-kcal">90</div></div>
-    <div class="meal-desc">300г арбуза или 200г дыни — сезонный фрукт по желанию</div>
-    <div class="meal-macros"><span class="pill pp">Б 2г</span><span class="pill pc">У 20г</span><span class="pill pf">Ж 0г</span></div>
-  </div>
-  <div class="meal-card">
-    <div class="meal-top"><div class="meal-icon ic-l">🥗</div><div class="meal-meta"><div class="meal-time">Обед · 13:30</div><div class="meal-title">Салат с тунцом и авокадо</div></div><div class="meal-kcal">430</div></div>
-    <div class="meal-desc">Тунец в/с 120г + ½ авокадо + огурец + листья салата + лимонный сок + оливковое масло</div>
-    <div class="meal-macros"><span class="pill pp">Б 30г</span><span class="pill pc">У 8г</span><span class="pill pf">Ж 22г</span></div>
-  </div>
-  <div class="meal-card">
-    <div class="meal-top"><div class="meal-icon ic-p">💚</div><div class="meal-meta"><div class="meal-time">После тренировки · 17:00</div><div class="meal-title">Смузи манго-молоко</div></div><div class="meal-kcal">200</div></div>
-    <div class="meal-desc">200мл молока 2.5% + 100г замороженного манго — взбить блендером</div>
-    <div class="meal-macros"><span class="pill pp">Б 8г</span><span class="pill pc">У 26г</span><span class="pill pf">Ж 6г</span></div>
-  </div>
-  <div class="meal-card">
-    <div class="meal-top"><div class="meal-icon ic-d">🌙</div><div class="meal-meta"><div class="meal-time">Ужин · 19:30</div><div class="meal-title">Курица в кефире с рисом</div></div><div class="meal-kcal">420</div></div>
-    <div class="meal-desc">Грудка 150г маринованная в кефире с чесноком — запечь в фольге (остаётся сочной!) + 80г риса</div>
-    <div class="meal-macros"><span class="pill pp">Б 40г</span><span class="pill pc">У 38г</span><span class="pill pf">Ж 6г</span></div>
-  </div>
-</div>
 
-<!-- ЧЕТВЕРГ -->
-<div class="day-panel" data-day="3">
-  <div class="total-bar"><div><div class="total-bar-lbl">Итого за день</div><div class="total-bar-sub">−155 ккал от нормы</div></div><div class="total-bar-val">1395 ккал</div></div>
-  <div class="macro-row">
-    <div class="macro-box"><div class="macro-val" style="color:#c97b6a">84г</div><div class="macro-lbl">Белки</div></div>
-    <div class="macro-box"><div class="macro-val" style="color:#5a68b5">114г</div><div class="macro-lbl">Углеводы</div></div>
-    <div class="macro-box"><div class="macro-val" style="color:#c9944a">46г</div><div class="macro-lbl">Жиры</div></div>
+  <!-- СР -->
+  <div class="day-panel" data-day="2">
+    <div class="total-bar"><div><div class="total-bar-lbl">Итого за день</div><div class="total-bar-sub">−20 ккал от нормы</div></div><div class="total-bar-val">1530 ккал</div></div>
+    <div class="macro-row">
+      <div class="macro-box"><div class="macro-val" style="color:#c97b6a">104г</div><div class="macro-lbl">Белки</div></div>
+      <div class="macro-box"><div class="macro-val" style="color:#5a68b5">128г</div><div class="macro-lbl">Углеводы</div></div>
+      <div class="macro-box"><div class="macro-val" style="color:#c9944a">46г</div><div class="macro-lbl">Жиры</div></div>
+    </div>
+    <div class="meal-card"><div class="meal-top"><div class="meal-icon ic-b">🥞</div><div class="meal-meta"><div class="meal-time">Завтрак · 8:00</div><div class="meal-title">Сырники с киви</div></div><div class="meal-kcal">390</div></div><div class="meal-desc">3 сырника из 200г творога в духовке 180° + сметана 15% + киви</div><div class="meal-macros"><span class="pill pp">Б 24г</span><span class="pill pc">У 34г</span><span class="pill pf">Ж 12г</span></div></div>
+    <div class="meal-card"><div class="meal-top"><div class="meal-icon ic-s">🍉</div><div class="meal-meta"><div class="meal-time">Перекус · 11:00</div><div class="meal-title">Арбуз или дыня</div></div><div class="meal-kcal">90</div></div><div class="meal-desc">300г арбуза или 200г дыни</div><div class="meal-macros"><span class="pill pp">Б 2г</span><span class="pill pc">У 20г</span><span class="pill pf">Ж 0г</span></div></div>
+    <div class="meal-card"><div class="meal-top"><div class="meal-icon ic-l">🥗</div><div class="meal-meta"><div class="meal-time">Обед · 13:30</div><div class="meal-title">Салат с тунцом и авокадо</div></div><div class="meal-kcal">430</div></div><div class="meal-desc">Тунец в/с 120г + ½ авокадо + огурец + листья салата + лимон + оливковое масло</div><div class="meal-macros"><span class="pill pp">Б 30г</span><span class="pill pc">У 8г</span><span class="pill pf">Ж 22г</span></div></div>
+    <div class="meal-card"><div class="meal-top"><div class="meal-icon ic-p">💚</div><div class="meal-meta"><div class="meal-time">После тренировки · 17:00</div><div class="meal-title">Смузи манго-молоко</div></div><div class="meal-kcal">200</div></div><div class="meal-desc">200мл молока 2.5% + 100г замороженного манго — взбить блендером</div><div class="meal-macros"><span class="pill pp">Б 8г</span><span class="pill pc">У 26г</span><span class="pill pf">Ж 6г</span></div></div>
+    <div class="meal-card"><div class="meal-top"><div class="meal-icon ic-d">🌙</div><div class="meal-meta"><div class="meal-time">Ужин · 19:30</div><div class="meal-title">Курица в кефире с рисом</div></div><div class="meal-kcal">420</div></div><div class="meal-desc">Грудка 150г маринованная в кефире с чесноком — запечь в фольге + 80г риса</div><div class="meal-macros"><span class="pill pp">Б 40г</span><span class="pill pc">У 38г</span><span class="pill pf">Ж 6г</span></div></div>
   </div>
-  <div class="meal-card">
-    <div class="meal-top"><div class="meal-icon ic-b">🥑</div><div class="meal-meta"><div class="meal-time">Завтрак · 8:00</div><div class="meal-title">Тост с авокадо и яйцом пашот</div></div><div class="meal-kcal">400</div></div>
-    <div class="meal-desc">2 ломтика цельнозернового хлеба + ½ авокадо + 2 яйца пашот + лимонный сок</div>
-    <div class="meal-macros"><span class="pill pp">Б 20г</span><span class="pill pc">У 32г</span><span class="pill pf">Ж 18г</span></div>
+
+  <!-- ЧТ -->
+  <div class="day-panel" data-day="3">
+    <div class="total-bar"><div><div class="total-bar-lbl">Итого за день</div><div class="total-bar-sub">−155 ккал от нормы</div></div><div class="total-bar-val">1395 ккал</div></div>
+    <div class="macro-row">
+      <div class="macro-box"><div class="macro-val" style="color:#c97b6a">84г</div><div class="macro-lbl">Белки</div></div>
+      <div class="macro-box"><div class="macro-val" style="color:#5a68b5">114г</div><div class="macro-lbl">Углеводы</div></div>
+      <div class="macro-box"><div class="macro-val" style="color:#c9944a">46г</div><div class="macro-lbl">Жиры</div></div>
+    </div>
+    <div class="meal-card"><div class="meal-top"><div class="meal-icon ic-b">🥑</div><div class="meal-meta"><div class="meal-time">Завтрак · 8:00</div><div class="meal-title">Тост с авокадо и яйцом пашот</div></div><div class="meal-kcal">400</div></div><div class="meal-desc">2 ломтика цельнозернового хлеба + ½ авокадо + 2 яйца пашот + лимонный сок</div><div class="meal-macros"><span class="pill pp">Б 20г</span><span class="pill pc">У 32г</span><span class="pill pf">Ж 18г</span></div></div>
+    <div class="meal-card"><div class="meal-top"><div class="meal-icon ic-s">🍓</div><div class="meal-meta"><div class="meal-time">Перекус · 11:00</div><div class="meal-title">Клубника или малина</div></div><div class="meal-kcal">80</div></div><div class="meal-desc">200г свежей клубники или малины</div><div class="meal-macros"><span class="pill pp">Б 2г</span><span class="pill pc">У 16г</span><span class="pill pf">Ж 1г</span></div></div>
+    <div class="meal-card"><div class="meal-top"><div class="meal-icon ic-l">🎃</div><div class="meal-meta"><div class="meal-time">Обед · 13:30</div><div class="meal-title">Суп-пюре из тыквы</div></div><div class="meal-kcal">320</div></div><div class="meal-desc">Тыква 300г + кокосовое молоко 50мл + имбирь + чеснок + куриный бульон + хлебцы</div><div class="meal-macros"><span class="pill pp">Б 8г</span><span class="pill pc">У 38г</span><span class="pill pf">Ж 10г</span></div></div>
+    <div class="meal-card"><div class="meal-top"><div class="meal-icon ic-s">🍒</div><div class="meal-meta"><div class="meal-time">Перекус · 16:30</div><div class="meal-title">Йогурт с вишней</div></div><div class="meal-kcal">175</div></div><div class="meal-desc">150г греческого йогурта + 80г вишни свежей или замороженной</div><div class="meal-macros"><span class="pill pp">Б 12г</span><span class="pill pc">У 18г</span><span class="pill pf">Ж 3г</span></div></div>
+    <div class="meal-card"><div class="meal-top"><div class="meal-icon ic-d">🌙</div><div class="meal-meta"><div class="meal-time">Ужин · 19:30</div><div class="meal-title">Паровые котлеты с цветной капустой</div></div><div class="meal-kcal">420</div></div><div class="meal-desc">2 котлеты на пару из 180г куриного фарша + 200г цветной капусты на пару</div><div class="meal-macros"><span class="pill pp">Б 42г</span><span class="pill pc">У 10г</span><span class="pill pf">Ж 14г</span></div></div>
   </div>
-  <div class="meal-card">
-    <div class="meal-top"><div class="meal-icon ic-s">🍓</div><div class="meal-meta"><div class="meal-time">Перекус · 11:00</div><div class="meal-title">Клубника или малина</div></div><div class="meal-kcal">80</div></div>
-    <div class="meal-desc">200г свежей клубники или малины — без добавок</div>
-    <div class="meal-macros"><span class="pill pp">Б 2г</span><span class="pill pc">У 16г</span><span class="pill pf">Ж 1г</span></div>
+
+  <!-- ПТ -->
+  <div class="day-panel" data-day="4">
+    <div class="total-bar"><div><div class="total-bar-lbl">Итого за день</div><div class="total-bar-sub">+30 ккал от нормы</div></div><div class="total-bar-val">1580 ккал</div></div>
+    <div class="macro-row">
+      <div class="macro-box"><div class="macro-val" style="color:#c97b6a">94г</div><div class="macro-lbl">Белки</div></div>
+      <div class="macro-box"><div class="macro-val" style="color:#5a68b5">142г</div><div class="macro-lbl">Углеводы</div></div>
+      <div class="macro-box"><div class="macro-val" style="color:#c9944a">51г</div><div class="macro-lbl">Жиры</div></div>
+    </div>
+    <div class="meal-card"><div class="meal-top"><div class="meal-icon ic-b">🌅</div><div class="meal-meta"><div class="meal-time">Завтрак · 8:00</div><div class="meal-title">Гранола с манго</div></div><div class="meal-kcal">380</div></div><div class="meal-desc">40г гранолы без сахара + 150мл молока 2.5% + 100г манго</div><div class="meal-macros"><span class="pill pp">Б 11г</span><span class="pill pc">У 52г</span><span class="pill pf">Ж 10г</span></div></div>
+    <div class="meal-card"><div class="meal-top"><div class="meal-icon ic-s">🍐</div><div class="meal-meta"><div class="meal-time">Перекус · 11:00</div><div class="meal-title">Груша + кешью</div></div><div class="meal-kcal">180</div></div><div class="meal-desc">1 груша ~160г + 15г кешью</div><div class="meal-macros"><span class="pill pp">Б 4г</span><span class="pill pc">У 28г</span><span class="pill pf">Ж 7г</span></div></div>
+    <div class="meal-card"><div class="meal-top"><div class="meal-icon ic-l">🥣</div><div class="meal-meta"><div class="meal-time">Обед · 13:30</div><div class="meal-title">Куриный боул с нутом</div></div><div class="meal-kcal">450</div></div><div class="meal-desc">130г куриного бедра + 80г нута + огурцы + зелень + оливковое масло + лимон</div><div class="meal-macros"><span class="pill pp">Б 36г</span><span class="pill pc">У 32г</span><span class="pill pf">Ж 12г</span></div></div>
+    <div class="meal-card"><div class="meal-top"><div class="meal-icon ic-p">💚</div><div class="meal-meta"><div class="meal-time">После тренировки · 17:00</div><div class="meal-title">Кефир + инжир</div></div><div class="meal-kcal">170</div></div><div class="meal-desc">200мл кефира + 2–3 шт инжира свежего ~80г</div><div class="meal-macros"><span class="pill pp">Б 7г</span><span class="pill pc">У 24г</span><span class="pill pf">Ж 2г</span></div></div>
+    <div class="meal-card"><div class="meal-top"><div class="meal-icon ic-d">🌙</div><div class="meal-meta"><div class="meal-time">Ужин · 19:30</div><div class="meal-title">Лосось с брокколи</div></div><div class="meal-kcal">400</div></div><div class="meal-desc">150г лосося в фольге с лимоном и укропом + 200г брокколи на пару</div><div class="meal-macros"><span class="pill pp">Б 36г</span><span class="pill pc">У 6г</span><span class="pill pf">Ж 20г</span></div></div>
   </div>
-  <div class="meal-card">
-    <div class="meal-top"><div class="meal-icon ic-l">🎃</div><div class="meal-meta"><div class="meal-time">Обед · 13:30</div><div class="meal-title">Суп-пюре из тыквы</div></div><div class="meal-kcal">320</div></div>
-    <div class="meal-desc">Тыква 300г + кокосовое молоко 50мл + имбирь + чеснок + куриный бульон. С хлебцами</div>
-    <div class="meal-macros"><span class="pill pp">Б 8г</span><span class="pill pc">У 38г</span><span class="pill pf">Ж 10г</span></div>
+
+  <!-- СБ -->
+  <div class="day-panel" data-day="5">
+    <div class="total-bar"><div><div class="total-bar-lbl">Итого за день</div><div class="total-bar-sub">+60 ккал от нормы</div></div><div class="total-bar-val">1610 ккал</div></div>
+    <div class="macro-row">
+      <div class="macro-box"><div class="macro-val" style="color:#c97b6a">109г</div><div class="macro-lbl">Белки</div></div>
+      <div class="macro-box"><div class="macro-val" style="color:#5a68b5">154г</div><div class="macro-lbl">Углеводы</div></div>
+      <div class="macro-box"><div class="macro-val" style="color:#c9944a">40г</div><div class="macro-lbl">Жиры</div></div>
+    </div>
+    <div class="meal-card"><div class="meal-top"><div class="meal-icon ic-b">🥞</div><div class="meal-meta"><div class="meal-time">Завтрак · 9:00</div><div class="meal-title">Блинчики с творогом и ягодами</div></div><div class="meal-kcal">420</div></div><div class="meal-desc">3 блинчика (цельнозерновая мука) + 100г творога + 80г клубники</div><div class="meal-macros"><span class="pill pp">Б 20г</span><span class="pill pc">У 52г</span><span class="pill pf">Ж 10г</span></div></div>
+    <div class="meal-card"><div class="meal-top"><div class="meal-icon ic-s">🥭</div><div class="meal-meta"><div class="meal-time">Перекус · 12:00</div><div class="meal-title">Смузи папайя-кефир</div></div><div class="meal-kcal">150</div></div><div class="meal-desc">100г папайи + 150мл кефира + лёд — взбить блендером</div><div class="meal-macros"><span class="pill pp">Б 7г</span><span class="pill pc">У 20г</span><span class="pill pf">Ж 2г</span></div></div>
+    <div class="meal-card"><div class="meal-top"><div class="meal-icon ic-l">🍜</div><div class="meal-meta"><div class="meal-time">Обед · 14:00</div><div class="meal-title">Куриный стир-фрай с лапшой</div></div><div class="meal-kcal">490</div></div><div class="meal-desc">150г куриного бедра + соевый соус + чеснок + имбирь + 100г гречневой лапши + шпинат</div><div class="meal-macros"><span class="pill pp">Б 36г</span><span class="pill pc">У 48г</span><span class="pill pf">Ж 12г</span></div></div>
+    <div class="meal-card"><div class="meal-top"><div class="meal-icon ic-s">🍊</div><div class="meal-meta"><div class="meal-time">Перекус · 17:00</div><div class="meal-title">Апельсин + йогурт</div></div><div class="meal-kcal">160</div></div><div class="meal-desc">1 апельсин + 100г йогурта 2%</div><div class="meal-macros"><span class="pill pp">Б 8г</span><span class="pill pc">У 22г</span><span class="pill pf">Ж 2г</span></div></div>
+    <div class="meal-card"><div class="meal-top"><div class="meal-icon ic-d">🌙</div><div class="meal-meta"><div class="meal-time">Ужин · 20:00</div><div class="meal-title">Курица в горчично-медовом соусе</div></div><div class="meal-kcal">390</div></div><div class="meal-desc">200г куриного бедра + горчица + мёд + чеснок — запечь + кабачок гриль</div><div class="meal-macros"><span class="pill pp">Б 38г</span><span class="pill pc">У 12г</span><span class="pill pf">Ж 14г</span></div></div>
   </div>
-  <div class="meal-card">
-    <div class="meal-top"><div class="meal-icon ic-s">🍒</div><div class="meal-meta"><div class="meal-time">Перекус · 16:30</div><div class="meal-title">Йогурт с вишней</div></div><div class="meal-kcal">175</div></div>
-    <div class="meal-desc">150г греческого йогурта + 80г вишни свежей или замороженной</div>
-    <div class="meal-macros"><span class="pill pp">Б 12г</span><span class="pill pc">У 18г</span><span class="pill pf">Ж 3г</span></div>
-  </div>
-  <div class="meal-card">
-    <div class="meal-top"><div class="meal-icon ic-d">🌙</div><div class="meal-meta"><div class="meal-time">Ужин · 19:30</div><div class="meal-title">Паровые котлеты с цветной капустой</div></div><div class="meal-kcal">420</div></div>
-    <div class="meal-desc">2 котлеты на пару из 180г куриного фарша (лук + яйцо) + 200г цветной капусты на пару</div>
-    <div class="meal-macros"><span class="pill pp">Б 42г</span><span class="pill pc">У 10г</span><span class="pill pf">Ж 14г</span></div>
+
+  <!-- ВС -->
+  <div class="day-panel" data-day="6">
+    <div class="total-bar"><div><div class="total-bar-lbl">Итого за день</div><div class="total-bar-sub">−25 ккал от нормы</div></div><div class="total-bar-val">1525 ккал</div></div>
+    <div class="macro-row">
+      <div class="macro-box"><div class="macro-val" style="color:#c97b6a">108г</div><div class="macro-lbl">Белки</div></div>
+      <div class="macro-box"><div class="macro-val" style="color:#5a68b5">104г</div><div class="macro-lbl">Углеводы</div></div>
+      <div class="macro-box"><div class="macro-val" style="color:#c9944a">49г</div><div class="macro-lbl">Жиры</div></div>
+    </div>
+    <div class="meal-card"><div class="meal-top"><div class="meal-icon ic-b">🍳</div><div class="meal-meta"><div class="meal-time">Завтрак · 9:00</div><div class="meal-title">Яичница с авокадо и огурцом</div></div><div class="meal-kcal">430</div></div><div class="meal-desc">3 яйца + ½ авокадо + свежий огурец + цельнозерновой тост</div><div class="meal-macros"><span class="pill pp">Б 22г</span><span class="pill pc">У 18г</span><span class="pill pf">Ж 24г</span></div></div>
+    <div class="meal-card"><div class="meal-top"><div class="meal-icon ic-s">🍇</div><div class="meal-meta"><div class="meal-time">Перекус · 12:00</div><div class="meal-title">Фруктовая тарелка</div></div><div class="meal-kcal">130</div></div><div class="meal-desc">Виноград 100г + мандарин 2 шт + киви 1 шт</div><div class="meal-macros"><span class="pill pp">Б 2г</span><span class="pill pc">У 28г</span><span class="pill pf">Ж 1г</span></div></div>
+    <div class="meal-card"><div class="meal-top"><div class="meal-icon ic-l">🍲</div><div class="meal-meta"><div class="meal-time">Обед · 14:00</div><div class="meal-title">Говяжий суп с гречкой</div></div><div class="meal-kcal">380</div></div><div class="meal-desc">Нежирная говядина 100г + морковь + лук + сельдерей + 50г гречки</div><div class="meal-macros"><span class="pill pp">Б 26г</span><span class="pill pc">У 38г</span><span class="pill pf">Ж 8г</span></div></div>
+    <div class="meal-card"><div class="meal-top"><div class="meal-icon ic-s">🍑</div><div class="meal-meta"><div class="meal-time">Перекус · 17:00</div><div class="meal-title">Творог со сливами</div></div><div class="meal-kcal">195</div></div><div class="meal-desc">150г творога 5% + 2 сливы ~100г</div><div class="meal-macros"><span class="pill pp">Б 16г</span><span class="pill pc">У 18г</span><span class="pill pf">Ж 5г</span></div></div>
+    <div class="meal-card"><div class="meal-top"><div class="meal-icon ic-d">🌙</div><div class="meal-meta"><div class="meal-time">Ужин · 19:30</div><div class="meal-title">Куриные медальоны с пюре из цветной капусты</div></div><div class="meal-kcal">390</div></div><div class="meal-desc">160г грудки (маринад кефир+специи) — отбить и запечь + пюре из цветной капусты</div><div class="meal-macros"><span class="pill pp">Б 40г</span><span class="pill pc">У 14г</span><span class="pill pf">Ж 10г</span></div></div>
   </div>
 </div>
 
-<!-- ПЯТНИЦА -->
-<div class="day-panel" data-day="4">
-  <div class="total-bar"><div><div class="total-bar-lbl">Итого за день</div><div class="total-bar-sub">+30 ккал от нормы</div></div><div class="total-bar-val">1580 ккал</div></div>
-  <div class="macro-row">
-    <div class="macro-box"><div class="macro-val" style="color:#c97b6a">94г</div><div class="macro-lbl">Белки</div></div>
-    <div class="macro-box"><div class="macro-val" style="color:#5a68b5">142г</div><div class="macro-lbl">Углеводы</div></div>
-    <div class="macro-box"><div class="macro-val" style="color:#c9944a">51г</div><div class="macro-lbl">Жиры</div></div>
+<!-- ===================== SHOP SECTION ===================== -->
+<div class="shop-section">
+  <div class="tabs-wrap shop-tabs">
+    <label class="tab-label" for="d0">Пн</label>
+    <label class="tab-label" for="d1">Вт</label>
+    <label class="tab-label" for="d2">Ср</label>
+    <label class="tab-label" for="d3">Чт</label>
+    <label class="tab-label" for="d4">Пт</label>
+    <label class="tab-label" for="d5">Сб</label>
+    <label class="tab-label" for="d6">Вс</label>
   </div>
-  <div class="meal-card">
-    <div class="meal-top"><div class="meal-icon ic-b">🌅</div><div class="meal-meta"><div class="meal-time">Завтрак · 8:00</div><div class="meal-title">Гранола с манго</div></div><div class="meal-kcal">380</div></div>
-    <div class="meal-desc">40г гранолы без сахара + 150мл молока 2.5% + 100г манго</div>
-    <div class="meal-macros"><span class="pill pp">Б 11г</span><span class="pill pc">У 52г</span><span class="pill pf">Ж 10г</span></div>
+
+  <!-- SHOP ПН -->
+  <div class="shop-panel" data-day="0">
+    <div class="shop-header-bar"><div class="shop-header-lbl">Понедельник · список покупок</div><div class="shop-header-val">9 позиций</div></div>
+    <div class="shop-cat"><div class="shop-cat-title">🥩 Мясо и молочное</div><div class="shop-items">
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Куриное бедро</div><div class="shop-item-amount">300г (суп + ужин)</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Яйца</div><div class="shop-item-amount">2 шт</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Греческий йогурт 2%</div><div class="shop-item-amount">150г</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Кефир 1%</div><div class="shop-item-amount">400мл (перекус + соус)</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Сыр твёрдый</div><div class="shop-item-amount">20г</div></div></label>
+    </div></div>
+    <div class="shop-cat"><div class="shop-cat-title">🥦 Овощи</div><div class="shop-items">
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Брокколи</div><div class="shop-item-amount">50г</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Кабачок</div><div class="shop-item-amount">200г</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Картофель, морковь, лук, шпинат</div><div class="shop-item-amount">для супа</div></div></label>
+    </div></div>
+    <div class="shop-cat"><div class="shop-cat-title">🍇 Фрукты</div><div class="shop-items">
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Виноград</div><div class="shop-item-amount">120г</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Груша</div><div class="shop-item-amount">1 шт</div></div></label>
+    </div></div>
+    <button class="clear-btn" onclick="clearDay(this)">Сбросить все галочки</button>
   </div>
-  <div class="meal-card">
-    <div class="meal-top"><div class="meal-icon ic-s">🍐</div><div class="meal-meta"><div class="meal-time">Перекус · 11:00</div><div class="meal-title">Груша + кешью</div></div><div class="meal-kcal">180</div></div>
-    <div class="meal-desc">1 груша ~160г + 15г кешью</div>
-    <div class="meal-macros"><span class="pill pp">Б 4г</span><span class="pill pc">У 28г</span><span class="pill pf">Ж 7г</span></div>
+
+  <!-- SHOP ВТ -->
+  <div class="shop-panel" data-day="1">
+    <div class="shop-header-bar"><div class="shop-header-lbl">Вторник · список покупок</div><div class="shop-header-val">10 позиций</div></div>
+    <div class="shop-cat"><div class="shop-cat-title">🥩 Мясо и молочное</div><div class="shop-items">
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Куриное бедро</div><div class="shop-item-amount">300г (обед + ужин)</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Творог 5%</div><div class="shop-item-amount">150г</div></div></label>
+    </div></div>
+    <div class="shop-cat"><div class="shop-cat-title">🥦 Овощи и крупы</div><div class="shop-items">
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Гречка</div><div class="shop-item-amount">100г</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Баклажан</div><div class="shop-item-amount">200г</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Огурцы, зелень, лук, чеснок</div><div class="shop-item-amount">для боула и ужина</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Оливковое масло</div><div class="shop-item-amount">небольшое кол-во</div></div></label>
+    </div></div>
+    <div class="shop-cat"><div class="shop-cat-title">🍑 Фрукты</div><div class="shop-items">
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Манго</div><div class="shop-item-amount">100г</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Персик</div><div class="shop-item-amount">1 шт (~120г)</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Нектарин</div><div class="shop-item-amount">1 шт (~140г)</div></div></label>
+    </div></div>
+    <div class="shop-cat"><div class="shop-cat-title">🥜 Орехи и специи</div><div class="shop-items">
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Миндаль</div><div class="shop-item-amount">15г</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Куркума</div><div class="shop-item-amount">щепотка</div></div></label>
+    </div></div>
+    <button class="clear-btn" onclick="clearDay(this)">Сбросить все галочки</button>
   </div>
-  <div class="meal-card">
-    <div class="meal-top"><div class="meal-icon ic-l">🥣</div><div class="meal-meta"><div class="meal-time">Обед · 13:30</div><div class="meal-title">Куриный боул с нутом</div></div><div class="meal-kcal">450</div></div>
-    <div class="meal-desc">130г куриного бедра + 80г нута варёного + огурцы + зелень + оливковое масло + лимон</div>
-    <div class="meal-macros"><span class="pill pp">Б 36г</span><span class="pill pc">У 32г</span><span class="pill pf">Ж 12г</span></div>
+
+  <!-- SHOP СР -->
+  <div class="shop-panel" data-day="2">
+    <div class="shop-header-bar"><div class="shop-header-lbl">Среда · список покупок</div><div class="shop-header-val">10 позиций</div></div>
+    <div class="shop-cat"><div class="shop-cat-title">🥩 Мясо и молочное</div><div class="shop-items">
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Куриная грудка</div><div class="shop-item-amount">150г</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Тунец в/с</div><div class="shop-item-amount">1 банка 120г</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Творог 5%</div><div class="shop-item-amount">200г (для сырников)</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Сметана 15%</div><div class="shop-item-amount">1 ст.л.</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Молоко 2.5%</div><div class="shop-item-amount">200мл</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Кефир</div><div class="shop-item-amount">200мл (маринад)</div></div></label>
+    </div></div>
+    <div class="shop-cat"><div class="shop-cat-title">🥦 Овощи и крупы</div><div class="shop-items">
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Рис</div><div class="shop-item-amount">80г</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Авокадо</div><div class="shop-item-amount">1 шт</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Огурец, листья салата</div><div class="shop-item-amount">для тунца</div></div></label>
+    </div></div>
+    <div class="shop-cat"><div class="shop-cat-title">🍉 Фрукты</div><div class="shop-items">
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Киви</div><div class="shop-item-amount">1 шт</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Манго замороженное</div><div class="shop-item-amount">100г</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Арбуз или дыня</div><div class="shop-item-amount">300г / 200г</div></div></label>
+    </div></div>
+    <button class="clear-btn" onclick="clearDay(this)">Сбросить все галочки</button>
   </div>
-  <div class="meal-card">
-    <div class="meal-top"><div class="meal-icon ic-p">💚</div><div class="meal-meta"><div class="meal-time">После тренировки · 17:00</div><div class="meal-title">Кефир + инжир</div></div><div class="meal-kcal">170</div></div>
-    <div class="meal-desc">200мл кефира + 2–3 шт инжира свежего ~80г</div>
-    <div class="meal-macros"><span class="pill pp">Б 7г</span><span class="pill pc">У 24г</span><span class="pill pf">Ж 2г</span></div>
+
+  <!-- SHOP ЧТ -->
+  <div class="shop-panel" data-day="3">
+    <div class="shop-header-bar"><div class="shop-header-lbl">Четверг · список покупок</div><div class="shop-header-val">11 позиций</div></div>
+    <div class="shop-cat"><div class="shop-cat-title">🥩 Мясо и молочное</div><div class="shop-items">
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Куриный фарш (из бедра)</div><div class="shop-item-amount">180г</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Яйца</div><div class="shop-item-amount">3 шт (пашот + фарш)</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Греческий йогурт</div><div class="shop-item-amount">150г</div></div></label>
+    </div></div>
+    <div class="shop-cat"><div class="shop-cat-title">🥦 Овощи</div><div class="shop-items">
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Тыква</div><div class="shop-item-amount">300г</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Цветная капуста</div><div class="shop-item-amount">200г</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Авокадо</div><div class="shop-item-amount">½ шт</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Имбирь свежий, чеснок</div><div class="shop-item-amount">для супа</div></div></label>
+    </div></div>
+    <div class="shop-cat"><div class="shop-cat-title">🍓 Фрукты</div><div class="shop-items">
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Клубника или малина</div><div class="shop-item-amount">200г</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Вишня</div><div class="shop-item-amount">80г</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Сливы</div><div class="shop-item-amount">2 шт</div></div></label>
+    </div></div>
+    <div class="shop-cat"><div class="shop-cat-title">🥥 Другое</div><div class="shop-items">
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Кокосовое молоко</div><div class="shop-item-amount">50мл</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Цельнозерновой хлеб</div><div class="shop-item-amount">2 ломтика</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Хлебцы рисовые</div><div class="shop-item-amount">к супу</div></div></label>
+    </div></div>
+    <button class="clear-btn" onclick="clearDay(this)">Сбросить все галочки</button>
   </div>
-  <div class="meal-card">
-    <div class="meal-top"><div class="meal-icon ic-d">🌙</div><div class="meal-meta"><div class="meal-time">Ужин · 19:30</div><div class="meal-title">Лосось с брокколи</div></div><div class="meal-kcal">400</div></div>
-    <div class="meal-desc">150г лосося в фольге с лимоном и укропом + 200г брокколи на пару</div>
-    <div class="meal-macros"><span class="pill pp">Б 36г</span><span class="pill pc">У 6г</span><span class="pill pf">Ж 20г</span></div>
+
+  <!-- SHOP ПТ -->
+  <div class="shop-panel" data-day="4">
+    <div class="shop-header-bar"><div class="shop-header-lbl">Пятница · список покупок</div><div class="shop-header-val">10 позиций</div></div>
+    <div class="shop-cat"><div class="shop-cat-title">🥩 Мясо и рыба</div><div class="shop-items">
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Куриное бедро</div><div class="shop-item-amount">130г</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Лосось</div><div class="shop-item-amount">150г</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Кефир</div><div class="shop-item-amount">200мл</div></div></label>
+    </div></div>
+    <div class="shop-cat"><div class="shop-cat-title">🥦 Овощи и бобовые</div><div class="shop-items">
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Нут варёный / консервированный</div><div class="shop-item-amount">80г</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Брокколи</div><div class="shop-item-amount">200г</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Огурцы, зелень, лимон</div><div class="shop-item-amount">для боула</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Укроп</div><div class="shop-item-amount">для лосося</div></div></label>
+    </div></div>
+    <div class="shop-cat"><div class="shop-cat-title">🍐 Фрукты и орехи</div><div class="shop-items">
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Манго</div><div class="shop-item-amount">100г</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Груша</div><div class="shop-item-amount">1 шт</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Инжир свежий</div><div class="shop-item-amount">2–3 шт</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Кешью</div><div class="shop-item-amount">15г</div></div></label>
+    </div></div>
+    <div class="shop-cat"><div class="shop-cat-title">🥣 Крупы</div><div class="shop-items">
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Гранола без сахара</div><div class="shop-item-amount">40г</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Молоко 2.5%</div><div class="shop-item-amount">150мл</div></div></label>
+    </div></div>
+    <button class="clear-btn" onclick="clearDay(this)">Сбросить все галочки</button>
+  </div>
+
+  <!-- SHOP СБ -->
+  <div class="shop-panel" data-day="5">
+    <div class="shop-header-bar"><div class="shop-header-lbl">Суббота · список покупок</div><div class="shop-header-val">12 позиций</div></div>
+    <div class="shop-cat"><div class="shop-cat-title">🥩 Мясо и молочное</div><div class="shop-items">
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Куриное бедро</div><div class="shop-item-amount">350г (обед + ужин)</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Творог 5%</div><div class="shop-item-amount">100г (блинчики)</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Кефир</div><div class="shop-item-amount">150мл (смузи)</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Йогурт 2%</div><div class="shop-item-amount">100г</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Яйцо</div><div class="shop-item-amount">1 шт (тесто)</div></div></label>
+    </div></div>
+    <div class="shop-cat"><div class="shop-cat-title">🥦 Овощи</div><div class="shop-items">
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Кабачок</div><div class="shop-item-amount">200г (гриль)</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Шпинат</div><div class="shop-item-amount">горсть (лапша)</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Имбирь, чеснок</div><div class="shop-item-amount">для стир-фрай</div></div></label>
+    </div></div>
+    <div class="shop-cat"><div class="shop-cat-title">🍓 Фрукты</div><div class="shop-items">
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Клубника</div><div class="shop-item-amount">80г (блинчики)</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Папайя</div><div class="shop-item-amount">100г</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Апельсин</div><div class="shop-item-amount">1 шт</div></div></label>
+    </div></div>
+    <div class="shop-cat"><div class="shop-cat-title">🥣 Крупы и соусы</div><div class="shop-items">
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Гречневая лапша</div><div class="shop-item-amount">100г</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Соевый соус</div><div class="shop-item-amount">2 ст.л.</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Горчица дижонская + мёд</div><div class="shop-item-amount">по 1 ч.л.</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Цельнозерновая мука</div><div class="shop-item-amount">для блинчиков</div></div></label>
+    </div></div>
+    <button class="clear-btn" onclick="clearDay(this)">Сбросить все галочки</button>
+  </div>
+
+  <!-- SHOP ВС -->
+  <div class="shop-panel" data-day="6">
+    <div class="shop-header-bar"><div class="shop-header-lbl">Воскресенье · список покупок</div><div class="shop-header-val">11 позиций</div></div>
+    <div class="shop-cat"><div class="shop-cat-title">🥩 Мясо и молочное</div><div class="shop-items">
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Куриная грудка</div><div class="shop-item-amount">160г</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Говядина нежирная</div><div class="shop-item-amount">100г (суп)</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Яйца</div><div class="shop-item-amount">3 шт</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Творог 5%</div><div class="shop-item-amount">150г</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Кефир</div><div class="shop-item-amount">200мл (маринад)</div></div></label>
+    </div></div>
+    <div class="shop-cat"><div class="shop-cat-title">🥦 Овощи и крупы</div><div class="shop-items">
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Цветная капуста</div><div class="shop-item-amount">200г (пюре)</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Авокадо</div><div class="shop-item-amount">½ шт</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Огурец</div><div class="shop-item-amount">1 шт</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Морковь, лук, сельдерей</div><div class="shop-item-amount">для супа</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Гречка</div><div class="shop-item-amount">50г</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Цельнозерновой хлеб</div><div class="shop-item-amount">1 ломтик</div></div></label>
+    </div></div>
+    <div class="shop-cat"><div class="shop-cat-title">🍇 Фрукты</div><div class="shop-items">
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Виноград</div><div class="shop-item-amount">100г</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Мандарины</div><div class="shop-item-amount">2 шт</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Киви</div><div class="shop-item-amount">1 шт</div></div></label>
+      <label class="shop-item"><input type="checkbox"><div class="shop-check">✓</div><div class="shop-item-text"><div class="shop-item-name">Сливы</div><div class="shop-item-amount">2 шт</div></div></label>
+    </div></div>
+    <button class="clear-btn" onclick="clearDay(this)">Сбросить все галочки</button>
   </div>
 </div>
 
-<!-- СУББОТА -->
-<div class="day-panel" data-day="5">
-  <div class="total-bar"><div><div class="total-bar-lbl">Итого за день</div><div class="total-bar-sub">+60 ккал от нормы</div></div><div class="total-bar-val">1610 ккал</div></div>
-  <div class="macro-row">
-    <div class="macro-box"><div class="macro-val" style="color:#c97b6a">109г</div><div class="macro-lbl">Белки</div></div>
-    <div class="macro-box"><div class="macro-val" style="color:#5a68b5">154г</div><div class="macro-lbl">Углеводы</div></div>
-    <div class="macro-box"><div class="macro-val" style="color:#c9944a">40г</div><div class="macro-lbl">Жиры</div></div>
-  </div>
-  <div class="meal-card">
-    <div class="meal-top"><div class="meal-icon ic-b">🥞</div><div class="meal-meta"><div class="meal-time">Завтрак · 9:00</div><div class="meal-title">Блинчики с творогом и ягодами</div></div><div class="meal-kcal">420</div></div>
-    <div class="meal-desc">3 тонких блинчика (цельнозерновая мука) + начинка 100г творога + 80г клубники</div>
-    <div class="meal-macros"><span class="pill pp">Б 20г</span><span class="pill pc">У 52г</span><span class="pill pf">Ж 10г</span></div>
-  </div>
-  <div class="meal-card">
-    <div class="meal-top"><div class="meal-icon ic-s">🥭</div><div class="meal-meta"><div class="meal-time">Перекус · 12:00</div><div class="meal-title">Смузи папайя-кефир</div></div><div class="meal-kcal">150</div></div>
-    <div class="meal-desc">100г папайи + 150мл кефира + лёд — взбить блендером</div>
-    <div class="meal-macros"><span class="pill pp">Б 7г</span><span class="pill pc">У 20г</span><span class="pill pf">Ж 2г</span></div>
-  </div>
-  <div class="meal-card">
-    <div class="meal-top"><div class="meal-icon ic-l">🍜</div><div class="meal-meta"><div class="meal-time">Обед · 14:00</div><div class="meal-title">Куриный стир-фрай с лапшой</div></div><div class="meal-kcal">490</div></div>
-    <div class="meal-desc">150г куриного бедра + соевый соус + чеснок + имбирь + 100г гречневой лапши + шпинат + кунжут</div>
-    <div class="meal-macros"><span class="pill pp">Б 36г</span><span class="pill pc">У 48г</span><span class="pill pf">Ж 12г</span></div>
-  </div>
-  <div class="meal-card">
-    <div class="meal-top"><div class="meal-icon ic-s">🍊</div><div class="meal-meta"><div class="meal-time">Перекус · 17:00</div><div class="meal-title">Апельсин + йогурт</div></div><div class="meal-kcal">160</div></div>
-    <div class="meal-desc">1 апельсин + 100г йогурта 2%</div>
-    <div class="meal-macros"><span class="pill pp">Б 8г</span><span class="pill pc">У 22г</span><span class="pill pf">Ж 2г</span></div>
-  </div>
-  <div class="meal-card">
-    <div class="meal-top"><div class="meal-icon ic-d">🌙</div><div class="meal-meta"><div class="meal-time">Ужин · 20:00</div><div class="meal-title">Курица в горчично-медовом соусе</div></div><div class="meal-kcal">390</div></div>
-    <div class="meal-desc">200г куриного бедра без кости + горчица + мёд + чеснок — запечь + кабачок гриль</div>
-    <div class="meal-macros"><span class="pill pp">Б 38г</span><span class="pill pc">У 12г</span><span class="pill pf">Ж 14г</span></div>
-  </div>
-</div>
-
-<!-- ВОСКРЕСЕНЬЕ -->
-<div class="day-panel" data-day="6">
-  <div class="total-bar"><div><div class="total-bar-lbl">Итого за день</div><div class="total-bar-sub">−25 ккал от нормы</div></div><div class="total-bar-val">1525 ккал</div></div>
-  <div class="macro-row">
-    <div class="macro-box"><div class="macro-val" style="color:#c97b6a">108г</div><div class="macro-lbl">Белки</div></div>
-    <div class="macro-box"><div class="macro-val" style="color:#5a68b5">104г</div><div class="macro-lbl">Углеводы</div></div>
-    <div class="macro-box"><div class="macro-val" style="color:#c9944a">49г</div><div class="macro-lbl">Жиры</div></div>
-  </div>
-  <div class="meal-card">
-    <div class="meal-top"><div class="meal-icon ic-b">🍳</div><div class="meal-meta"><div class="meal-time">Завтрак · 9:00</div><div class="meal-title">Яичница с авокадо и огурцом</div></div><div class="meal-kcal">430</div></div>
-    <div class="meal-desc">3 яйца + ½ авокадо + свежий огурец + цельнозерновой тост</div>
-    <div class="meal-macros"><span class="pill pp">Б 22г</span><span class="pill pc">У 18г</span><span class="pill pf">Ж 24г</span></div>
-  </div>
-  <div class="meal-card">
-    <div class="meal-top"><div class="meal-icon ic-s">🍇</div><div class="meal-meta"><div class="meal-time">Перекус · 12:00</div><div class="meal-title">Фруктовая тарелка</div></div><div class="meal-kcal">130</div></div>
-    <div class="meal-desc">Виноград 100г + мандарин 2 шт + киви 1 шт — красиво нарезать</div>
-    <div class="meal-macros"><span class="pill pp">Б 2г</span><span class="pill pc">У 28г</span><span class="pill pf">Ж 1г</span></div>
-  </div>
-  <div class="meal-card">
-    <div class="meal-top"><div class="meal-icon ic-l">🍲</div><div class="meal-meta"><div class="meal-time">Обед · 14:00</div><div class="meal-title">Говяжий суп с гречкой</div></div><div class="meal-kcal">380</div></div>
-    <div class="meal-desc">Нежирная говядина 100г + морковь + лук + сельдерей + 50г гречки — сытный воскресный суп</div>
-    <div class="meal-macros"><span class="pill pp">Б 26г</span><span class="pill pc">У 38г</span><span class="pill pf">Ж 8г</span></div>
-  </div>
-  <div class="meal-card">
-    <div class="meal-top"><div class="meal-icon ic-s">🍑</div><div class="meal-meta"><div class="meal-time">Перекус · 17:00</div><div class="meal-title">Творог со сливами</div></div><div class="meal-kcal">195</div></div>
-    <div class="meal-desc">150г творога 5% + 2 сливы ~100г</div>
-    <div class="meal-macros"><span class="pill pp">Б 16г</span><span class="pill pc">У 18г</span><span class="pill pf">Ж 5г</span></div>
-  </div>
-  <div class="meal-card">
-    <div class="meal-top"><div class="meal-icon ic-d">🌙</div><div class="meal-meta"><div class="meal-time">Ужин · 19:30</div><div class="meal-title">Куриные медальоны с пюре из цветной капусты</div></div><div class="meal-kcal">390</div></div>
-    <div class="meal-desc">160г грудки (маринад кефир+специи) — отбить и запечь + пюре из цветной капусты</div>
-    <div class="meal-macros"><span class="pill pp">Б 40г</span><span class="pill pc">У 14г</span><span class="pill pf">Ж 10г</span></div>
-  </div>
-</div>
-
+<script>
+function clearDay(btn) {
+  const panel = btn.closest('.shop-panel');
+  panel.querySelectorAll('input[type=checkbox]').forEach(cb => cb.checked = false);
+}
+</script>
 </body>
 </html>
